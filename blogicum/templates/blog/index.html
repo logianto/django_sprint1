@@ -13,7 +13,7 @@
           Категория: <a href="{% url 'blog:category_posts' post.category %}">{{ post.category }}</a>
         </li>
       </ul>
-      <p>{{ post.text|truncatewords:10 }}</p> <br>
+      <p>{{ post.text|truncatewords:10|linebreaksbr }}</p>
       <a href="{% url 'blog:post_detail' post.id %}">Читать полный текст</a>
     </article>
   {% endfor %}
