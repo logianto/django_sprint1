@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
 
-posts: list = [
+posts = [
     {
         'id': 0,
         'location': 'Остров отчаянья',
@@ -44,26 +44,20 @@ posts: list = [
     },
 ]
 
-edited_posts: dict = {
+post = {
     post['id']: post for post in posts
 }
 
 
 def index(request):
-    template_name = 'blog/index.html'
-    context = {'posts': posts[::-1]}
-    return render(request, template_name, context)
+    return render(request, 'blog/index.html', {'posts': posts[::-1]})
 
 
 def post_detail(request, post_id):
-    template_name = 'blog/detail.html'
-    if post_id not in edited_posts:
-        raise Http404('Страница не найдена')
-    context = {'post': edited_posts[post_id]}
-    return render(request, template_name, context)
+    if post_id not in post:
+        raise Http404(f'Блог с id{post_id} не существует')
+    return render(request, 'blog/detail.html', {'post': post[post_id]})
 
 
 def category_posts(request, category_slug):
-    template_name = 'blog/category.html'
-    context = {'category': category_slug}
-    return render(request, template_name, context)
+    return render(request, 'blog/category.html', {'category': category_slug})
